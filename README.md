@@ -1,0 +1,2 @@
+# token_demo
+简单实现token存储到Redis，登录时创建token根据用户名存储到Redis中，登录成功返回token到前端，可以设置token在Redis中的时效，重新登录会重新生成新的token，根据用户名替换旧的token。主要使用StringRedisTemplate类操作Redis。
