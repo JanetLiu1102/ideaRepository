@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tjch.grainbig.dao.FarmersLandUserMapper" >
+    <resultMap id="BaseResultMap" type="com.tjch.grainbig.pojo.FarmersLand" >
+        <id column="gid" property="gid" jdbcType="INTEGER" />
+        <result column="dkid" property="dkid" jdbcType="VARCHAR" />
+        <result column="yhid" property="yhid" jdbcType="VARCHAR" />
+        <result column="htbh1" property="htbh1" jdbcType="VARCHAR" />
+        <result column="htbh2" property="htbh2" jdbcType="VARCHAR" />
+        <result column="htbh3" property="htbh3" jdbcType="VARCHAR" />
+        <result column="dkmj" property="dkmj" jdbcType="NUMERIC" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="qrd" property="qrd" jdbcType="VARCHAR" />
+        <result column="zhenname" property="zhenname" jdbcType="VARCHAR" />
+        <result column="zhenid" property="zhenid" jdbcType="VARCHAR" />
+        <result column="cunname" property="cunname" jdbcType="VARCHAR" />
+        <result column="cunid" property="cunid" jdbcType="VARCHAR" />
+        <result column="cbmj" property="cbmj" jdbcType="NUMERIC" />
+        <result column="geom" property="geom" jdbcType="OTHER" />
+    </resultMap>
+    <select id="selecetByKey" resultMap="BaseResultMap" parameterType="String">
+        select * from farmers_land
+        <where>
+            <if test="key != null and key !=''">
+                cunname   LIKE CONCAT('%',#{key},'%')
+            </if>
+            <if test="key != null and key !=''">
+                or zhenname LIKE CONCAT('%',#{key},'%')
+            </if>
+        </where>
+        ORDER BY gid
+    </select>
+    <select id="countByAllTown" resultType="com.tjch.grainbig.model.SelectItem" >
+      SELECT COUNT(n.dkid) nvalue,n.zhenid typeid,n.zhenname nname
+      from farmers_land n
+      GROUP BY n.zhenid,n.zhenname
+    </select>
+    <select id="countByAllVillage" resultType="com.tjch.grainbig.model.SelectItem" >
+        SELECT COUNT(n.dkid) nvalue,n.cunid,n.zhenid typeid,n.cunname nname
+        from farmers_land n
+        GROUP BY n.cunid,n.cunname,n.zhenid
+    </select>
+
+    <select id="countName" resultType="String" >
+        SELECT n.zhenname
+        from farmers_land n
+        GROUP BY n.zhenname
+    </select>
+    <select id="countByTownArea" resultType="com.tjch.grainbig.model.SelectItemArea" >
+        SELECT sum(n.dkmj) actualarea,sum(n.cbmj) contractarea ,n.zhenname nname,n.zhenid vid
+        from farmers_land n
+        GROUP BY n.zhenname,n.zhenid
+    </select>
+
+    <select id="areaCountByTown" resultType="com.tjch.grainbig.model.SelectItemArea"
+            parameterType="String">
+        SELECT sum(n.dkmj) actualarea,sum(n.cbmj) contractarea ,n.cunname nname,n.cunid vid
+        from farmers_land n
+        <where>
+        <if test="key!=null and  key !=''">
+            n.zhenid = #{key}
+        </if>
+        </where>
+        GROUP BY n.cunname,n.cunid
+    </select>
+    <select id="countByTownNames" resultType="String"
+            parameterType="String">
+        SELECT n.cunname nname
+        from farmers_land n
+        <where>
+            <if test="key!=null and  key !=''">
+                n.zhenid = #{key}
+            </if>
+        </where>
+        GROUP BY n.cunname
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap"
+            parameterType="com.tjch.grainbig.model.LandKeyModel">
+        select * from farmers_land
+        <where>
+            <if test="key != null and key !=''">
+                ( cunname   LIKE CONCAT('%',#{key},'%')
+            </if>
+            <if test="key != null and key !=''">
+                or zhenname LIKE CONCAT('%',#{key},'%')
+            </if>
+            <if test="key != null and key !=''">
+                or name LIKE CONCAT('%',#{key},'%') )
+            </if>
+            <if test="zhenid != null and zhenid !=''">
+                and zhenid = #{zhenid}
+            </if>
+            <if test="cunid != null and cunid !=''">
+                and cunid = #{cunid}
+            </if>
+            Limit #{pageIndex},#{pageSize}
+        </where>
+        ORDER BY gid
+    </select>
+
+</mapper>

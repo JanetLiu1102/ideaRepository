@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tjch.grainbig.dao.UserDataMapper" >
+  <resultMap id="BaseResultMap" type="com.tjch.grainbig.pojo.UserData" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dhmc" property="dhmc" jdbcType="VARCHAR" />
+    <result column="sfzh" property="sfzh" jdbcType="VARCHAR" />
+    <result column="ykth" property="ykth" jdbcType="VARCHAR" />
+    <result column="jd" property="jd" jdbcType="VARCHAR" />
+    <result column="cun" property="cun" jdbcType="VARCHAR" />
+    <result column="dh" property="dh" jdbcType="VARCHAR" />
+    <result column="htmj" property="htmj" jdbcType="DOUBLE" />
+    <result column="scmj" property="scmj" jdbcType="DOUBLE" />
+    <result column="mjcha" property="mjcha" jdbcType="DOUBLE" />
+    <result column="clsj" property="clsj" jdbcType="VARCHAR" />
+    <result column="dxm" property="dxm" jdbcType="VARCHAR" />
+    <result column="zd" property="zd" jdbcType="VARCHAR" />
+    <result column="lzwd" property="lzwd" jdbcType="VARCHAR" />
+    <result column="djwd" property="djwd" jdbcType="VARCHAR" />
+    <result column="xj" property="xj" jdbcType="VARCHAR" />
+    <result column="nbzj" property="nbzj" jdbcType="VARCHAR" />
+    <result column="fzzs" property="fzzs" jdbcType="VARCHAR" />
+    <result column="htbh" property="htbh" jdbcType="VARCHAR" />
+    <result column="qrd" property="qrd" jdbcType="VARCHAR" />
+    <result column="bz" property="bz" jdbcType="VARCHAR" />
+    <result column="nhs" property="nhs" jdbcType="INTEGER" />
+    <result column="jd_id" property="jdId" jdbcType="VARCHAR" />
+    <result column="cun_id" property="cunId" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dhmc, sfzh, ykth, jd, cun, dh, htmj, scmj, mjcha, clsj, dxm, zd, lzwd, djwd, 
+    xj, nbzj, fzzs, htbh, qrd, bz, nhs, jd_id, cun_id, year
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_data
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_data
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tjch.grainbig.pojo.UserData" >
+    insert into user_data (id, dhmc, sfzh, 
+      ykth, jd, cun, dh, 
+      htmj, scmj, mjcha, clsj, 
+      dxm, zd, lzwd, djwd, 
+      xj, nbzj, fzzs, htbh, 
+      qrd, bz, nhs, jd_id, 
+      cun_id, year)
+    values (#{id,jdbcType=INTEGER}, #{dhmc,jdbcType=VARCHAR}, #{sfzh,jdbcType=VARCHAR}, 
+      #{ykth,jdbcType=VARCHAR}, #{jd,jdbcType=VARCHAR}, #{cun,jdbcType=VARCHAR}, #{dh,jdbcType=VARCHAR}, 
+      #{htmj,jdbcType=DOUBLE}, #{scmj,jdbcType=DOUBLE}, #{mjcha,jdbcType=DOUBLE}, #{clsj,jdbcType=VARCHAR}, 
+      #{dxm,jdbcType=VARCHAR}, #{zd,jdbcType=VARCHAR}, #{lzwd,jdbcType=VARCHAR}, #{djwd,jdbcType=VARCHAR}, 
+      #{xj,jdbcType=VARCHAR}, #{nbzj,jdbcType=VARCHAR}, #{fzzs,jdbcType=VARCHAR}, #{htbh,jdbcType=VARCHAR}, 
+      #{qrd,jdbcType=VARCHAR}, #{bz,jdbcType=VARCHAR}, #{nhs,jdbcType=INTEGER}, #{jdId,jdbcType=VARCHAR}, 
+      #{cunId,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tjch.grainbig.pojo.UserData" >
+    insert into user_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dhmc != null" >
+        dhmc,
+      </if>
+      <if test="sfzh != null" >
+        sfzh,
+      </if>
+      <if test="ykth != null" >
+        ykth,
+      </if>
+      <if test="jd != null" >
+        jd,
+      </if>
+      <if test="cun != null" >
+        cun,
+      </if>
+      <if test="dh != null" >
+        dh,
+      </if>
+      <if test="htmj != null" >
+        htmj,
+      </if>
+      <if test="scmj != null" >
+        scmj,
+      </if>
+      <if test="mjcha != null" >
+        mjcha,
+      </if>
+      <if test="clsj != null" >
+        clsj,
+      </if>
+      <if test="dxm != null" >
+        dxm,
+      </if>
+      <if test="zd != null" >
+        zd,
+      </if>
+      <if test="lzwd != null" >
+        lzwd,
+      </if>
+      <if test="djwd != null" >
+        djwd,
+      </if>
+      <if test="xj != null" >
+        xj,
+      </if>
+      <if test="nbzj != null" >
+        nbzj,
+      </if>
+      <if test="fzzs != null" >
+        fzzs,
+      </if>
+      <if test="htbh != null" >
+        htbh,
+      </if>
+      <if test="qrd != null" >
+        qrd,
+      </if>
+      <if test="bz != null" >
+        bz,
+      </if>
+      <if test="nhs != null" >
+        nhs,
+      </if>
+      <if test="jdId != null" >
+        jd_id,
+      </if>
+      <if test="cunId != null" >
+        cun_id,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dhmc != null" >
+        #{dhmc,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzh != null" >
+        #{sfzh,jdbcType=VARCHAR},
+      </if>
+      <if test="ykth != null" >
+        #{ykth,jdbcType=VARCHAR},
+      </if>
+      <if test="jd != null" >
+        #{jd,jdbcType=VARCHAR},
+      </if>
+      <if test="cun != null" >
+        #{cun,jdbcType=VARCHAR},
+      </if>
+      <if test="dh != null" >
+        #{dh,jdbcType=VARCHAR},
+      </if>
+      <if test="htmj != null" >
+        #{htmj,jdbcType=DOUBLE},
+      </if>
+      <if test="scmj != null" >
+        #{scmj,jdbcType=DOUBLE},
+      </if>
+      <if test="mjcha != null" >
+        #{mjcha,jdbcType=DOUBLE},
+      </if>
+      <if test="clsj != null" >
+        #{clsj,jdbcType=VARCHAR},
+      </if>
+      <if test="dxm != null" >
+        #{dxm,jdbcType=VARCHAR},
+      </if>
+      <if test="zd != null" >
+        #{zd,jdbcType=VARCHAR},
+      </if>
+      <if test="lzwd != null" >
+        #{lzwd,jdbcType=VARCHAR},
+      </if>
+      <if test="djwd != null" >
+        #{djwd,jdbcType=VARCHAR},
+      </if>
+      <if test="xj != null" >
+        #{xj,jdbcType=VARCHAR},
+      </if>
+      <if test="nbzj != null" >
+        #{nbzj,jdbcType=VARCHAR},
+      </if>
+      <if test="fzzs != null" >
+        #{fzzs,jdbcType=VARCHAR},
+      </if>
+      <if test="htbh != null" >
+        #{htbh,jdbcType=VARCHAR},
+      </if>
+      <if test="qrd != null" >
+        #{qrd,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
+        #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="nhs != null" >
+        #{nhs,jdbcType=INTEGER},
+      </if>
+      <if test="jdId != null" >
+        #{jdId,jdbcType=VARCHAR},
+      </if>
+      <if test="cunId != null" >
+        #{cunId,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tjch.grainbig.pojo.UserData" >
+    update user_data
+    <set >
+      <if test="dhmc != null" >
+        dhmc = #{dhmc,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzh != null" >
+        sfzh = #{sfzh,jdbcType=VARCHAR},
+      </if>
+      <if test="ykth != null" >
+        ykth = #{ykth,jdbcType=VARCHAR},
+      </if>
+      <if test="jd != null" >
+        jd = #{jd,jdbcType=VARCHAR},
+      </if>
+      <if test="cun != null" >
+        cun = #{cun,jdbcType=VARCHAR},
+      </if>
+      <if test="dh != null" >
+        dh = #{dh,jdbcType=VARCHAR},
+      </if>
+      <if test="htmj != null" >
+        htmj = #{htmj,jdbcType=DOUBLE},
+      </if>
+      <if test="scmj != null" >
+        scmj = #{scmj,jdbcType=DOUBLE},
+      </if>
+      <if test="mjcha != null" >
+        mjcha = #{mjcha,jdbcType=DOUBLE},
+      </if>
+      <if test="clsj != null" >
+        clsj = #{clsj,jdbcType=VARCHAR},
+      </if>
+      <if test="dxm != null" >
+        dxm = #{dxm,jdbcType=VARCHAR},
+      </if>
+      <if test="zd != null" >
+        zd = #{zd,jdbcType=VARCHAR},
+      </if>
+      <if test="lzwd != null" >
+        lzwd = #{lzwd,jdbcType=VARCHAR},
+      </if>
+      <if test="djwd != null" >
+        djwd = #{djwd,jdbcType=VARCHAR},
+      </if>
+      <if test="xj != null" >
+        xj = #{xj,jdbcType=VARCHAR},
+      </if>
+      <if test="nbzj != null" >
+        nbzj = #{nbzj,jdbcType=VARCHAR},
+      </if>
+      <if test="fzzs != null" >
+        fzzs = #{fzzs,jdbcType=VARCHAR},
+      </if>
+      <if test="htbh != null" >
+        htbh = #{htbh,jdbcType=VARCHAR},
+      </if>
+      <if test="qrd != null" >
+        qrd = #{qrd,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
+        bz = #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="nhs != null" >
+        nhs = #{nhs,jdbcType=INTEGER},
+      </if>
+      <if test="jdId != null" >
+        jd_id = #{jdId,jdbcType=VARCHAR},
+      </if>
+      <if test="cunId != null" >
+        cun_id = #{cunId,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tjch.grainbig.pojo.UserData" >
+    update user_data
+    set dhmc = #{dhmc,jdbcType=VARCHAR},
+      sfzh = #{sfzh,jdbcType=VARCHAR},
+      ykth = #{ykth,jdbcType=VARCHAR},
+      jd = #{jd,jdbcType=VARCHAR},
+      cun = #{cun,jdbcType=VARCHAR},
+      dh = #{dh,jdbcType=VARCHAR},
+      htmj = #{htmj,jdbcType=DOUBLE},
+      scmj = #{scmj,jdbcType=DOUBLE},
+      mjcha = #{mjcha,jdbcType=DOUBLE},
+      clsj = #{clsj,jdbcType=VARCHAR},
+      dxm = #{dxm,jdbcType=VARCHAR},
+      zd = #{zd,jdbcType=VARCHAR},
+      lzwd = #{lzwd,jdbcType=VARCHAR},
+      djwd = #{djwd,jdbcType=VARCHAR},
+      xj = #{xj,jdbcType=VARCHAR},
+      nbzj = #{nbzj,jdbcType=VARCHAR},
+      fzzs = #{fzzs,jdbcType=VARCHAR},
+      htbh = #{htbh,jdbcType=VARCHAR},
+      qrd = #{qrd,jdbcType=VARCHAR},
+      bz = #{bz,jdbcType=VARCHAR},
+      nhs = #{nhs,jdbcType=INTEGER},
+      jd_id = #{jdId,jdbcType=VARCHAR},
+      cun_id = #{cunId,jdbcType=VARCHAR},
+      year = #{year,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

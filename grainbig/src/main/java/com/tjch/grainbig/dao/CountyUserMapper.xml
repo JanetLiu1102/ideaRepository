@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tjch.grainbig.dao.CountyUserMapper" >
+    <resultMap id="BaseResultMap" type="com.tjch.grainbig.pojo.County" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="c_name" property="cName" jdbcType="VARCHAR" />
+    <result column="c_code" property="cCode" jdbcType="INTEGER" />
+</resultMap>
+    <resultMap id="TownMap" type="com.tjch.grainbig.pojo.Town" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="t_name" property="tName" jdbcType="VARCHAR" />
+        <result column="t_code" property="tCode" jdbcType="VARCHAR" />
+        <result column="c_id" property="cId" jdbcType="INTEGER" />
+    </resultMap>
+    <resultMap id="VillageMap" type="com.tjch.grainbig.pojo.Village" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="v_name" property="vName" jdbcType="VARCHAR" />
+        <result column="v_code" property="vCode" jdbcType="INTEGER" />
+        <result column="t_id" property="tId" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectCounty" resultMap="BaseResultMap"  parameterType="Integer">
+        select  *  from county
+        <where>
+            <if test="id!=null and id!=0">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+    <select id="selectTownByCid" resultMap="TownMap"
+            parameterType="Integer" >
+        select  *  from town
+        <where>
+            <if test="cid!=null and cid!=0">
+              c_id = #{cid}
+            </if>
+            <if test="id!=null and id!=0">
+                and id =#{id}
+            </if>
+        </where>
+    </select>
+    <select id="selectVillageByTid" resultMap="VillageMap"
+            parameterType="Integer" >
+        select  *  from village
+        <where>
+            <if test="tid!=null and tid!=0">
+                t_id = #{tid}
+            </if>
+            <if test="id!=null and id!=0">
+                and id =#{id}
+            </if>
+        </where>
+    </select>
+</mapper>

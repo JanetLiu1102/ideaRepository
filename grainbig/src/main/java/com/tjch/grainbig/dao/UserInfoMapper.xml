@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tjch.grainbig.dao.UserInfoMapper" >
+    <resultMap id="userInfoMap" type="com.tjch.grainbig.model.UserReaultMap"
+               extends="com.tjch.grainbig.dao.UsersMapper.BaseResultMap">
+        <id column="id" property="id" />
+        <association property="county" column="c_id" select="getCounty"></association>
+        <association property="town" column="t_id" select="getTown">
+        </association>
+        <association property="village" column="v_id" select="getVillage"></association>
+    </resultMap>
+    <resultMap id="townMap" type="com.tjch.grainbig.pojo.Town">
+        <id column="id" property="id" />
+        <result column="t_name"  property="tName" />
+        <result column="t_code"  property="tCode" />
+    </resultMap>
+    <resultMap id="countyMap" type="com.tjch.grainbig.pojo.County">
+        <id column="id" property="id" />
+        <result column="c_name"  property="cName" />
+        <result column="c_code"  property="cCode" />
+    </resultMap>
+    <resultMap id="villageMap" type="com.tjch.grainbig.pojo.Village">
+        <id column="id"   property="id" />
+        <result column="v_name"   property="vName" />
+        <result column="v_code"   property="vCode" />
+    </resultMap>
+    <select id="selectLogin" resultMap="userInfoMap" parameterType="com.tjch.grainbig.model.UserModel">
+        SELECT * FROM users
+        where name=#{username}
+    </select>
+    <select id="getUserInfo" resultMap="userInfoMap" parameterType="String">
+        SELECT * FROM users
+        where name =#{name}
+    </select>
+    <select id="getUserInfoById" resultMap="userInfoMap" parameterType="Integer">
+        SELECT * FROM users
+        where id =#{id}
+    </select>
+    <select id="getCounty" resultMap="countyMap" >
+        SELECT * FROM county
+        where id=#{id}
+    </select>
+    <select id="getTown" resultMap="townMap" >
+        SELECT * FROM town
+        where id=#{id}
+    </select>
+    <select id="getVillage" resultMap="villageMap" >
+        SELECT * FROM village
+        where id=#{id}
+    </select>
+    <select id="selectAll" resultMap="userInfoMap" parameterType="com.tjch.grainbig.model.UserModel">
+        SELECT id, name, real_name, v_id, t_id,
+        c_id, sex, email, tel,
+        typeid, enable FROM users
+        <where>
+            <if test="username!=null and username!=''">
+                name LIKE CONCAT('%',#{username},'%')
+            </if>
+            <if test="tId!=null and tId!=''">
+               and  t_id = #{tId}
+            </if>
+            <if test="cId!=null and cId!=''">
+                and c_id = #{cId}
+            </if>
+            <if test="vId!=null and vId!=''">
+                and v_id = #{vId}
+            </if>
+            <if test="type!=0 and type!=null and type!=''">
+              and typeid =#{type}
+            </if>
+            <if test="enable!=null and enable!=''">
+                and enable =#{enable}
+            </if>
+        </where>
+    </select>
+    <update id="editPassWord" >
+        update users set user_password = #{password}
+        where id = #{id}
+    </update>
+    <update id="editUser" parameterType="com.tjch.grainbig.model.UserModel">
+        update users set
+        name = #{username},
+      real_name = #{realName},
+      v_id = #{vId},
+      t_id = #{tId},
+      c_id = #{cId},
+      sex = #{sex},
+      email = #{email},
+      tel = #{tel},
+      typeid = #{type},
+      enable = #{enable}
+        where id = #{id}
+    </update>
+    <update id="passUser" parameterType="Integer[]" >
+        update users set  enable = 1
+        <where>
+            <if test="id!=null and id.length>0">
+                 id  in
+                <foreach collection="id" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="Integer[]" >
+    delete from users
+        <where>
+            <if test="id!=null and id.length>0">
+                id  in
+                <foreach collection="id" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+  </delete>
+
+
+
+</mapper>

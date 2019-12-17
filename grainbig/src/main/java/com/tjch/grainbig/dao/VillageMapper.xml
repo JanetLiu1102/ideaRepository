@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tjch.grainbig.dao.VillageMapper" >
+  <resultMap id="BaseResultMap" type="com.tjch.grainbig.pojo.Village" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="v_name" property="vName" jdbcType="VARCHAR" />
+    <result column="t_id" property="tId" jdbcType="INTEGER" />
+    <result column="v_code" property="vCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, v_name, t_id, v_code
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from village
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from village
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tjch.grainbig.pojo.Village" >
+    insert into village (id, v_name, t_id, 
+      v_code)
+    values (#{id,jdbcType=INTEGER}, #{vName,jdbcType=VARCHAR}, #{tId,jdbcType=INTEGER}, 
+      #{vCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tjch.grainbig.pojo.Village" >
+    insert into village
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="vName != null" >
+        v_name,
+      </if>
+      <if test="tId != null" >
+        t_id,
+      </if>
+      <if test="vCode != null" >
+        v_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="vName != null" >
+        #{vName,jdbcType=VARCHAR},
+      </if>
+      <if test="tId != null" >
+        #{tId,jdbcType=INTEGER},
+      </if>
+      <if test="vCode != null" >
+        #{vCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tjch.grainbig.pojo.Village" >
+    update village
+    <set >
+      <if test="vName != null" >
+        v_name = #{vName,jdbcType=VARCHAR},
+      </if>
+      <if test="tId != null" >
+        t_id = #{tId,jdbcType=INTEGER},
+      </if>
+      <if test="vCode != null" >
+        v_code = #{vCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tjch.grainbig.pojo.Village" >
+    update village
+    set v_name = #{vName,jdbcType=VARCHAR},
+      t_id = #{tId,jdbcType=INTEGER},
+      v_code = #{vCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

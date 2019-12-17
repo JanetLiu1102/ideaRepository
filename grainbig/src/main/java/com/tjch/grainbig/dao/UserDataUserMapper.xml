@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tjch.grainbig.dao.UserDataUserMapper" >
+    <resultMap id="BaseResultMap" type="com.tjch.grainbig.pojo.UserData" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="dhmc" property="dhmc" jdbcType="CHAR" />
+        <result column="sfzh" property="sfzh" jdbcType="CHAR" />
+        <result column="ykth" property="ykth" jdbcType="CHAR" />
+        <result column="jd" property="jd" jdbcType="CHAR" />
+        <result column="cun" property="cun" jdbcType="CHAR" />
+        <result column="dh" property="dh" jdbcType="CHAR" />
+        <result column="htmj" property="htmj" jdbcType="DOUBLE" />
+        <result column="scmj" property="scmj" jdbcType="DOUBLE" />
+        <result column="mjcha" property="mjcha" jdbcType="DOUBLE" />
+        <result column="clsj" property="clsj" jdbcType="CHAR" />
+        <result column="dxm" property="dxm" jdbcType="CHAR" />
+        <result column="zd" property="zd" jdbcType="CHAR" />
+        <result column="lzwd" property="lzwd" jdbcType="CHAR" />
+        <result column="djwd" property="djwd" jdbcType="CHAR" />
+        <result column="xj" property="xj" jdbcType="CHAR" />
+        <result column="nbzj" property="nbzj" jdbcType="CHAR" />
+        <result column="fzzs" property="fzzs" jdbcType="CHAR" />
+        <result column="htbh" property="htbh" jdbcType="CHAR" />
+        <result column="qrd" property="qrd" jdbcType="CHAR" />
+        <result column="bz" property="bz" jdbcType="CHAR" />
+        <result column="nhs" property="nhs" jdbcType="INTEGER" />
+        <result column="jd_id" property="jdId" jdbcType="VARCHAR" />
+        <result column="cun_id" property="cunId" jdbcType="VARCHAR" />
+        <result column="year" property="year" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectCount" resultType="Long"  parameterType="com.tjch.grainbig.model.SelectParam">
+        select count(*) from user_data where 1=1
+            <if test="jdName != null and jdName != ''">
+                and jd  LIKE CONCAT('%',#{jdName},'%')
+            </if>
+            <if test="cName != null and cName != ''">
+                and cun  LIKE CONCAT('%',#{cName},'%')
+            </if>
+            <if test="nName != null and nName != ''">
+                and dhmc  LIKE CONCAT('%',#{nName},'%')
+            </if>
+            <if test="cardId != null and cardId != ''">
+                and sfzh  LIKE CONCAT('%',#{cardId},'%')
+            </if>
+        <if test="year != null and year != ''">
+            and year  =#{year}
+        </if>
+    </select>
+    <select id="selectUserDataByKey" resultMap="BaseResultMap"  parameterType="com.tjch.grainbig.model.SelectParam">
+        select * from user_data where 1=1
+        <if test="jdName != null and jdName != ''">
+            and jd  LIKE CONCAT('%',#{jdName},'%')
+        </if>
+        <if test="cName != null and cName != ''">
+            and cun  LIKE CONCAT('%',#{cName},'%')
+        </if>
+        <if test="nName != null and nName != ''">
+            and dhmc  LIKE CONCAT('%',#{nName},'%')
+        </if>
+        <if test="cardId != null and cardId != ''">
+            and sfzh  LIKE CONCAT('%',#{cardId},'%')
+        </if>
+        <if test="year != null and year != ''">
+            and year  =#{year}
+        </if>
+        ORDER BY id
+        <if test="pageIndex != null and pageSize != null">
+            limit  ${pageSize} offset ${(pageIndex - 1) * pageSize}
+        </if>
+
+    </select>
+    <select id="selectGroupByJd" resultType="com.tjch.grainbig.model.SelectItemGroup" parameterType="String">
+       select d.jd jdName,d.htmj htmj,d.nhs nhs
+      from user_data d
+        <where>
+            <if test="year!=null and year !=''">
+                year = #{year}
+            </if>
+
+        </where>
+      GROUP BY d.jd,d.htmj,d.nhs
+    </select>
+
+    <select id="selectJdName" resultType="java.util.List"  parameterType="String">
+       select DISTINCT(d.jd) jdName
+        from user_data d
+        <where>
+        <if test="year!=null and year !=''">
+            year = #{year}
+        </if>
+
+        </where>
+
+        GROUP BY d.jd
+    </select>
+    <select id="selectGroupByCun" resultType="com.tjch.grainbig.model.SelectItemGroup"  parameterType="String">
+       select d.jd jdName,d.htmj htmj,d.nhs nhs
+      from user_data d
+        <where>
+            <if test="jdName!=null and jdName!=''">
+                jd =#{jdName}
+            </if>
+                <if test="year!=null and year !=''">
+                   and  year = #{year}
+                </if>
+        </where>
+      GROUP BY d.cun,d.htmj,d.nhs
+    </select>
+    <select id="selectCunName" resultType="java.util.List" >
+       select DISTINCT(d.cun) cunName
+        from user_data d
+        <where>
+            <if test="year!=null and year !=''">
+                  year = #{year}
+            </if>
+        </where>
+        GROUP BY d.cun
+    </select>
+    <select id="selectUserDataCount" resultType="Integer" >
+       select count(u.sfzh) dataCount from user_data u
+       <where>
+           <if test="cunId!=null and cunId != ''">
+               u.cun_id =#{cunId}
+           </if>
+           <if test="zhenId!=null and zhenId != ''">
+              and  u.jd_id =#{zhenId}
+           </if>
+           <if test="userCode!=null and userCode != ''">
+               and  u.sfzh =#{userCode}
+           </if>
+           <if test="year!=null and year !=''">
+              and  year = #{year}
+           </if>
+       </where>
+    </select>
+
+    <select id="selectSCMJ" resultType="DOUBLE" >
+        select sum(u.scmj) dataCount from user_data u
+        <where>
+            <if test="cunId!=null and cunId != ''">
+                u.cun_id =#{cunId}
+            </if>
+            <if test="zhenId!=null and zhenId != ''">
+                and  u.jd_id =#{zhenId}
+            </if>
+            <if test="userCode!=null and userCode != ''">
+                and  u.sfzh =#{userCode}
+            </if>
+            <if test="year!=null and year !=''">
+                and year = #{year}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectHTMJ" resultType="DOUBLE" >
+        select sum(u.htmj) dataCount from user_data u
+        <where>
+            <if test="cunId!=null and cunId != ''">
+                u.cun_id =#{cunId}
+            </if>
+            <if test="zhenId!=null and zhenId != ''">
+                and  u.jd_id =#{zhenId}
+            </if>
+            <if test="userCode!=null and userCode != ''">
+                and  u.sfzh =#{userCode}
+            </if>
+            <if test="year!=null and year !=''">
+                and year = #{year}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="countByAllTown" resultType="com.tjch.grainbig.model.SelectItem" >
+       SELECT COUNT(n.id) nvalue,n.jd nname
+      from user_data n
+        <where>
+            <if test="year!=null and year !=''">
+                year = #{year}
+            </if>
+
+        </where>
+      GROUP BY n.jd
+    </select>
+
+    <select id="countByAllVillage" resultType="com.tjch.grainbig.model.SelectItem" >
+        SELECT count(n.id) nvalue,n.cun nname,n.jd jname
+        from user_data n
+        <where>
+            <if test="year!=null and year !=''">
+                year = #{year}
+            </if>
+
+        </where>
+        GROUP BY n.cun,n.jd
+    </select>
+    <select id="countByVillage" resultType="com.tjch.grainbig.model.SelectItem" parameterType="String">
+        SELECT COUNT(n.id) nvalue,n.jd jname,n.cun nname
+        from user_data n
+        where n.jd_id =#{tId}
+        GROUP BY n.cun,n.jd
+    </select>
+    <select id="countByDH" resultType="com.tjch.grainbig.model.SelectItem" parameterType="String">
+        SELECT COUNT(n.id) nvalue,n.sfzh,n.cun_id typeid,n.dhmc nname
+        from user_data n
+        where n.cun_id =#{vId}
+            <if test="year!=null and year !=''">
+               and  year = #{year}
+            </if>
+
+        GROUP BY n.sfzh,n.dhmc,n.cun_id
+    </select>
+    <select id="countName" resultType="String" >
+        SELECT n.jd
+        from user_data n
+        <where>
+            <if test="year!=null and year !=''">
+                year = #{year}
+            </if>
+
+        </where>
+        GROUP BY n.jd
+    </select>
+    <select id="countByTownArea" resultType="com.tjch.grainbig.model.SelectItemArea" parameterType="String">
+        SELECT sum(n.htmj) actualarea,sum(n.scmj) contractarea ,n.jd nname
+        from user_data n
+        <where>
+            <if test="year!=null and year !=''">
+                year = #{year}
+            </if>
+
+        </where>
+        GROUP BY n.jd
+    </select>
+
+    <select id="areaCountByTown" resultType="com.tjch.grainbig.model.SelectItemArea"
+            parameterType="String">
+        SELECT sum(n.htmj) actualarea,sum(n.scmj) contractarea ,n.cun nname
+        from user_data n
+        <where>
+            <if test="tId!=null and  tId !=''">
+                n.jd_id = #{tId}
+            </if>
+                <if test="year!=null and year !=''">
+                    and year = #{year}
+                </if>
+
+        </where>
+        GROUP BY n.cun
+    </select>
+    <select id="areaCountByVillage" resultType="com.tjch.grainbig.model.SelectItemArea"
+            parameterType="String">
+        SELECT sum(n.htmj) actualarea,sum(n.scmj) contractarea ,n.dhmc nname,n.sfzh vid
+        from user_data n
+        <where>
+            <if test="vId!=null and  vId !=''">
+                n.cun_id = #{vId}
+            </if>
+                <if test="year!=null and year !=''">
+                   and year = #{year}
+                </if>
+
+        </where>
+        GROUP BY n.sfzh,n.dhmc
+    </select>
+    <select id="countByTownNames" resultType="String"
+            parameterType="String">
+        SELECT n.cun nname
+        from user_data n
+        <where>
+            <if test="tId!=null and  tId !=''">
+                n.jd_id = #{tId}
+            </if>
+                <if test="year!=null and year !=''">
+                   and year = #{year}
+                </if>
+        </where>
+        GROUP BY n.cun
+    </select>
+</mapper>

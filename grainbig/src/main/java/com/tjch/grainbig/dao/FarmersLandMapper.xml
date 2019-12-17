@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tjch.grainbig.dao.FarmersLandMapper" >
+  <resultMap id="BaseResultMap" type="com.tjch.grainbig.pojo.FarmersLand" >
+    <id column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="dkid" property="dkid" jdbcType="VARCHAR" />
+    <result column="yhid" property="yhid" jdbcType="VARCHAR" />
+    <result column="htbh1" property="htbh1" jdbcType="VARCHAR" />
+    <result column="htbh2" property="htbh2" jdbcType="VARCHAR" />
+    <result column="htbh3" property="htbh3" jdbcType="VARCHAR" />
+    <result column="dkmj" property="dkmj" jdbcType="NUMERIC" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="qrd" property="qrd" jdbcType="VARCHAR" />
+    <result column="zhenname" property="zhenname" jdbcType="VARCHAR" />
+    <result column="zhenid" property="zhenid" jdbcType="VARCHAR" />
+    <result column="cunname" property="cunname" jdbcType="VARCHAR" />
+    <result column="cunid" property="cunid" jdbcType="VARCHAR" />
+    <result column="cbmj" property="cbmj" jdbcType="NUMERIC" />
+    <result column="geom" property="geom" jdbcType="OTHER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    gid, dkid, yhid, htbh1, htbh2, htbh3, dkmj, name, qrd, zhenname, zhenid, cunname, 
+    cunid, cbmj, geom
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from farmers_land
+    where gid = #{gid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from farmers_land
+    where gid = #{gid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tjch.grainbig.pojo.FarmersLand" >
+    insert into farmers_land (gid, dkid, yhid, 
+      htbh1, htbh2, htbh3, 
+      dkmj, name, qrd, zhenname, 
+      zhenid, cunname, cunid, 
+      cbmj, geom)
+    values (#{gid,jdbcType=INTEGER}, #{dkid,jdbcType=VARCHAR}, #{yhid,jdbcType=VARCHAR}, 
+      #{htbh1,jdbcType=VARCHAR}, #{htbh2,jdbcType=VARCHAR}, #{htbh3,jdbcType=VARCHAR}, 
+      #{dkmj,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{qrd,jdbcType=VARCHAR}, #{zhenname,jdbcType=VARCHAR}, 
+      #{zhenid,jdbcType=VARCHAR}, #{cunname,jdbcType=VARCHAR}, #{cunid,jdbcType=VARCHAR}, 
+      #{cbmj,jdbcType=NUMERIC}, #{geom,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tjch.grainbig.pojo.FarmersLand" >
+    insert into farmers_land
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="dkid != null" >
+        dkid,
+      </if>
+      <if test="yhid != null" >
+        yhid,
+      </if>
+      <if test="htbh1 != null" >
+        htbh1,
+      </if>
+      <if test="htbh2 != null" >
+        htbh2,
+      </if>
+      <if test="htbh3 != null" >
+        htbh3,
+      </if>
+      <if test="dkmj != null" >
+        dkmj,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="qrd != null" >
+        qrd,
+      </if>
+      <if test="zhenname != null" >
+        zhenname,
+      </if>
+      <if test="zhenid != null" >
+        zhenid,
+      </if>
+      <if test="cunname != null" >
+        cunname,
+      </if>
+      <if test="cunid != null" >
+        cunid,
+      </if>
+      <if test="cbmj != null" >
+        cbmj,
+      </if>
+      <if test="geom != null" >
+        geom,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="dkid != null" >
+        #{dkid,jdbcType=VARCHAR},
+      </if>
+      <if test="yhid != null" >
+        #{yhid,jdbcType=VARCHAR},
+      </if>
+      <if test="htbh1 != null" >
+        #{htbh1,jdbcType=VARCHAR},
+      </if>
+      <if test="htbh2 != null" >
+        #{htbh2,jdbcType=VARCHAR},
+      </if>
+      <if test="htbh3 != null" >
+        #{htbh3,jdbcType=VARCHAR},
+      </if>
+      <if test="dkmj != null" >
+        #{dkmj,jdbcType=NUMERIC},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="qrd != null" >
+        #{qrd,jdbcType=VARCHAR},
+      </if>
+      <if test="zhenname != null" >
+        #{zhenname,jdbcType=VARCHAR},
+      </if>
+      <if test="zhenid != null" >
+        #{zhenid,jdbcType=VARCHAR},
+      </if>
+      <if test="cunname != null" >
+        #{cunname,jdbcType=VARCHAR},
+      </if>
+      <if test="cunid != null" >
+        #{cunid,jdbcType=VARCHAR},
+      </if>
+      <if test="cbmj != null" >
+        #{cbmj,jdbcType=NUMERIC},
+      </if>
+      <if test="geom != null" >
+        #{geom,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tjch.grainbig.pojo.FarmersLand" >
+    update farmers_land
+    <set >
+      <if test="dkid != null" >
+        dkid = #{dkid,jdbcType=VARCHAR},
+      </if>
+      <if test="yhid != null" >
+        yhid = #{yhid,jdbcType=VARCHAR},
+      </if>
+      <if test="htbh1 != null" >
+        htbh1 = #{htbh1,jdbcType=VARCHAR},
+      </if>
+      <if test="htbh2 != null" >
+        htbh2 = #{htbh2,jdbcType=VARCHAR},
+      </if>
+      <if test="htbh3 != null" >
+        htbh3 = #{htbh3,jdbcType=VARCHAR},
+      </if>
+      <if test="dkmj != null" >
+        dkmj = #{dkmj,jdbcType=NUMERIC},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="qrd != null" >
+        qrd = #{qrd,jdbcType=VARCHAR},
+      </if>
+      <if test="zhenname != null" >
+        zhenname = #{zhenname,jdbcType=VARCHAR},
+      </if>
+      <if test="zhenid != null" >
+        zhenid = #{zhenid,jdbcType=VARCHAR},
+      </if>
+      <if test="cunname != null" >
+        cunname = #{cunname,jdbcType=VARCHAR},
+      </if>
+      <if test="cunid != null" >
+        cunid = #{cunid,jdbcType=VARCHAR},
+      </if>
+      <if test="cbmj != null" >
+        cbmj = #{cbmj,jdbcType=NUMERIC},
+      </if>
+      <if test="geom != null" >
+        geom = #{geom,jdbcType=OTHER},
+      </if>
+    </set>
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tjch.grainbig.pojo.FarmersLand" >
+    update farmers_land
+    set dkid = #{dkid,jdbcType=VARCHAR},
+      yhid = #{yhid,jdbcType=VARCHAR},
+      htbh1 = #{htbh1,jdbcType=VARCHAR},
+      htbh2 = #{htbh2,jdbcType=VARCHAR},
+      htbh3 = #{htbh3,jdbcType=VARCHAR},
+      dkmj = #{dkmj,jdbcType=NUMERIC},
+      name = #{name,jdbcType=VARCHAR},
+      qrd = #{qrd,jdbcType=VARCHAR},
+      zhenname = #{zhenname,jdbcType=VARCHAR},
+      zhenid = #{zhenid,jdbcType=VARCHAR},
+      cunname = #{cunname,jdbcType=VARCHAR},
+      cunid = #{cunid,jdbcType=VARCHAR},
+      cbmj = #{cbmj,jdbcType=NUMERIC},
+      geom = #{geom,jdbcType=OTHER}
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+</mapper>
